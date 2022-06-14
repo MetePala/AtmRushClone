@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CollectController : MonoBehaviour
+{
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Para"))
+        {
+            other.gameObject.transform.position = transform.position + Vector3.forward;
+       //     Destroy(gameObject.GetComponent<CollectController>());
+            other.gameObject.AddComponent<CollectController>();
+            other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+            other.gameObject.AddComponent<NodeMovement>();
+            other.gameObject.GetComponent<NodeMovement>()._connectedNode = transform;
+            other.gameObject.tag = "Collected";
+        }
+
+        if(other.gameObject.CompareTag("Tuzak"))
+        {
+            if(gameObject.CompareTag("Collected"))
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        
+
+
+
+    }
+
+
+
+}
